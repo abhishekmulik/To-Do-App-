@@ -1,0 +1,29 @@
+{% extends "task/base.html" %}
+
+{% block body_block %}
+<form method="POST" action="/"> <!--On clicking submit the action will take us on home page-->
+    {% csrf_token %}
+    {{form.title}}  <!--To have only title field in form-->
+    <input class="btn btn-info" type="submit" name="Create Task">
+</form>
+
+<div class="todo-list">
+	
+{% for t in task %}
+<div class="item-row">
+    
+        <a class="btn btn-sm btn-info" href="{% url 'update_task' t.id %}">Update</a>    <!--update_task is the name in urls and t.id links the particular task with respective id-->
+        <a class="btn btn-sm btn-danger" href="{% url 'delete' t.id %}">delete</a>  
+
+        {% if t.complete == True %}
+        <strike>{{t}}</strike>
+        {% else %}
+        <span>{{t}}</span>
+        {%endif%}
+    </div>
+{% endfor %}
+
+</div>
+{% endblock %}
+
+
